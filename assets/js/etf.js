@@ -1,5 +1,8 @@
 var num = 1;
 function addRow(){
+  $(".btn").mouseup(function(){
+    $(this).blur();
+  })
     var table = document.getElementById("stonks")
     var newRow = document.createElement("tr")
     newRow.setAttribute("id", "row" + num)
@@ -28,6 +31,9 @@ function addRow(){
     num += 1
 }
 function delRow(){
+  $(".btn").mouseup(function(){
+    $(this).blur();
+  })
     var table = document.getElementById("stonks")
     if (table.hasChildNodes()) {
       var rows = table.childElementCount
@@ -56,6 +62,9 @@ function getQuote(symbol, i, availCap, table){
   });
 }
 function autoBalance(){
+  $(".btn").mouseup(function(){
+    $(this).blur();
+  })
     var table = document.getElementById("stonks")
     var rows = table.childElementCount
     var availCap = document.getElementById("availCapital").value
