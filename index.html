@@ -23,7 +23,6 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th></th>
                                     <th>Ticker</th>
                                     <th>Allocation %</th>
                                     <th>PPS</th>
@@ -31,14 +30,13 @@
                                     <th>Total Equity</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="stonks">
                                 <tr>
-                                    <td>Cell 1</td>
-                                    <td>Cell 2</td>
-                                    <td>Cell 2</td>
-                                    <td>Cell 2</td>
-                                    <td>Cell 2</td>
-                                    <td>Cell 2</td>
+                                    <td><input id="symbol0" type="text"></td>
+                                    <td><input id="alloc0" type="text"></td>
+                                    <td id="pps0">Cell 2</td>
+                                    <td id="quant0">100</td>
+                                    <td id="eq0">Cell 2</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -50,14 +48,20 @@
     <div>
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="btn-group" role="group"><button class="btn btn-primary" type="button">Add</button><button class="btn btn-primary" type="button">Delete</button><button class="btn btn-primary" type="button">Calculate</button></div>
+                <div class="col-md-12 offset-xl-0">
+                    <div class="row">
+                        <div class="col">
+                            <h5>Available Capital:&nbsp;<input id="availCapital" type="text"></h5>
+                        </div>
+                    </div>
+                    <div class="btn-group" role="group"><button class="btn btn-primary" type="button" onclick="addRow()">Add</button><button class="btn btn-primary" type="button" onclick="delRow()">Delete</button><button class="btn btn-primary" type="button" onclick="autoBalance()">Auto Balance</button></div>
                 </div>
             </div>
         </div>
     </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/etf.js"></script>
 </body>
 
 </html>
