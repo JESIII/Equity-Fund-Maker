@@ -43,28 +43,28 @@ function delRow(){
         table.removeChild(table.childNodes[rows+1]);
       }
 }
-function getQuote(symbol, i, availCap, table){
-  console.log(i)
+function getQuote(symbol, i, availCap){
   var settings = {
     "url": "https://finnhub.io/api/v1/quote?token=bsnpc1nrh5rctp1flcd0&symbol=" + symbol,
     "method": "GET",
     "timeout": 0,
     "headers": {
-      "Cookie": "__cfduid=d404aa8f0146ae8a0c5ecc746e85c294d1597517827"
+      //"Cookie": "__cfduid=d404aa8f0146ae8a0c5ecc746e85c294d1597517827"
     },
   };
   $.ajax(settings).done(function (response) {
+    console.log("Sent Request: " + settings.url)
     var alloc = document.getElementById("alloc" + (i)).value / 100 * availCap
     var quan = Math.floor(alloc / response.pc)
     var eq = quan * response.pc
-    console.log(i)
+    console.log(symbol + ": " + response.pc)
     document.getElementById("quant"+(i)).innerText = quan
     document.getElementById("pps"+(i)).innerText = response.pc
     document.getElementById("eq"+(i)).innerText = eq
     availCap = availCap - eq
   });
 }
-function autoBalance(){
+async function autoBalance(){
   $(".btn").mouseup(function(){
     $(this).blur();
   })
@@ -78,29 +78,31 @@ function autoBalance(){
     for(var i = 0; i < rows; i++){
         var symbol = document.getElementById("symbol"+i).value.toUpperCase()
         console.log(symbol)
-        getQuote(symbol, i, availCap, table)
+        getQuote(symbol, i, availCap)
+        await sleep(200)
     }
 }
-async function getMarketCap(symbol, i, rows, marketCaps){
+function getMarketCap(symbol, i, rows, marketCaps){
   console.log(i)
-  await sleep(500)
   var settings = {
     "url": "https://finnhub.io/api/v1/stock/profile2?token=bsnpc1nrh5rctp1flcd0&symbol=" + symbol,
     "method": "GET",
     "timeout": 0,
     "headers": {
-      "Cookie": "__cfduid=d404aa8f0146ae8a0c5ecc746e85c294d1597517827"
+      //"Cookie": "__cfduid=d404aa8f0146ae8a0c5ecc746e85c294d1597517827"
     },
   };
   $.ajax(settings).done(async function (response) {
+    console.log("Sent Request: " + settings.url)
     marketCaps[i].cap = response.marketCapitalization
+    console.log(symbol + ": " + response.marketCapitalization)
     if (marketCaps.length == rows){
+      await sleep(200)
       calcWeights(marketCaps)
     }
-    await sleep(500)
-    });
+  });
 }
-function marketBalance(){
+async function marketBalance(){
   $(".btn").mouseup(function(){
     $(this).blur();
   })
@@ -115,9 +117,10 @@ function marketBalance(){
     marketCaps.push({i:i,cap:0})
     var symbol = document.getElementById("symbol"+i).value.toUpperCase()
     getMarketCap(symbol, i, rows, marketCaps);
+    await sleep(200)
   }
 }
-function calcWeights(marketCaps){
+async function calcWeights(marketCaps){
   var table = document.getElementById("stonks")
   var rows = table.childElementCount
   var totalCap = 0
@@ -125,15 +128,14 @@ function calcWeights(marketCaps){
     totalCap += marketCaps[i].cap
   }
   for(i = 0; i < rows; i++){
-    document.getElementById("alloc" + i).value = ((marketCaps[i].cap/totalCap)*100)
-    console.log(((marketCaps[i].cap/totalCap)*100))
+    document.getElementById("alloc" + i).value = (marketCaps[i].cap/totalCap)*100
   }
   
   for(i = 0; i < rows; i++){
     var symbol = document.getElementById("symbol"+i).value.toUpperCase()
     var table = document.getElementById("stonks")
     var availCap = document.getElementById("availCapital").value
-    console.log(symbol)
     getQuote(symbol, i, availCap, table)
+    await sleep(200)
   }
 }
