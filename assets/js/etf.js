@@ -46,7 +46,7 @@ function delRow(){
 }
 function getQuote(symbol, i, availCap){
   var settings = {
-    "url": "https://finnhub.io/api/v1/quote?token=bsnpc1nrh5rctp1flcd0&symbol=" + symbol,
+    "url": "https://finnhub.io/api/v1/quote?token=bt4mbbv48v6um6kgp3vg&symbol=" + symbol,
     "method": "GET",
     "timeout": 0,
     "headers": {
@@ -93,7 +93,7 @@ async function autoBalance(){
 function getMarketCap(symbol, i, rows, marketCaps){
   console.log(i)
   var settings = {
-    "url": "https://finnhub.io/api/v1/stock/profile2?token=bsnpc1nrh5rctp1flcd0&symbol=" + symbol,
+    "url": "https://finnhub.io/api/v1/stock/profile2?token=bt4mbbv48v6um6kgp3vg&symbol=" + symbol,
     "method": "GET",
     "timeout": 0,
     "headers": {
