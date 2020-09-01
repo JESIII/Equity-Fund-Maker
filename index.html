@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>ETF Allocator</title>
+    <title>Fund Allocator</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
@@ -14,7 +14,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>ETF Allocator</h1>
+                    <h1>Fund Allocator</h1>
                 </div>
             </div>
             <div class="row">
@@ -54,7 +54,9 @@
                             <h5>Available Capital:&nbsp;<input id="availCapital" type="text"></h5>
                         </div>
                     </div>
-                    <div class="btn-group" role="group"><button class="btn btn-primary" type="button" onclick="addRow()">Add</button><button class="btn btn-primary" type="button" onclick="delRow()">Delete</button><button class="btn btn-primary" type="button" onclick="autoBalance()">Balance Using Given Allocations</button><button class="btn btn-primary" type="button" onclick="marketBalance()">Balance Using Market Weight</button></div>
+                    <div class="btn-group" role="group"><button class="btn btn-primary" type="button" onclick="addRow()">Add</button><button class="btn btn-primary" type="button" onclick="delRow()">Delete</button><button class="btn btn-primary" type="button" onclick="autoBalance()">Balance Using Given Allocations</button><button class="btn btn-primary" type="button" onclick="marketBalance()">Balance Using Market Weight</button><div id="loading" class="spinner-border" role="status" style="display:none">
+    <span class="sr-only">Loading...</span>
+</div></div>
                 </div>
             </div>
         </div>
@@ -63,5 +65,13 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/etf.js"></script>
 </body>
-
+<script>
+$(document).ajaxStart(function() {
+  $("#loading").show();
+  });
+  
+  $(document).ajaxStop(function() {
+  $("#loading").hide();
+  });
+</script>
 </html>

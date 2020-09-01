@@ -1,4 +1,5 @@
 var num = 1;
+var capper = 0;
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -52,7 +53,10 @@ function getQuote(symbol, i, availCap){
       //"Cookie": "__cfduid=d404aa8f0146ae8a0c5ecc746e85c294d1597517827"
     },
   };
-  $.ajax(settings).done(function (response) {
+  $.ajax(settings).done(async function (response) {
+    if(capper%30 == 0 && capper!= 0){
+      await sleep(60000)
+    }
     console.log("Sent Request: " + settings.url)
     var alloc = document.getElementById("alloc" + (i)).value / 100 * availCap
     var quan = Math.floor(alloc / response.pc)
@@ -76,10 +80,14 @@ async function autoBalance(){
     var rows = table.childElementCount
     var availCap = document.getElementById("availCapital").value
     for(var i = 0; i < rows; i++){
+        capper += 1
+        if(capper%30 == 0 && capper!= 0){
+          await sleep(60000)
+        }
         var symbol = document.getElementById("symbol"+i).value.toUpperCase()
         console.log(symbol)
         getQuote(symbol, i, availCap)
-        await sleep(200)
+        await sleep(40)
     }
 }
 function getMarketCap(symbol, i, rows, marketCaps){
@@ -97,7 +105,10 @@ function getMarketCap(symbol, i, rows, marketCaps){
     marketCaps[i].cap = response.marketCapitalization
     console.log(symbol + ": " + response.marketCapitalization)
     if (marketCaps.length == rows){
-      await sleep(200)
+      await sleep(40)
+      if(capper%30 == 0 && capper!= 0){
+        await sleep(60000)
+      }
       calcWeights(marketCaps)
     }
   });
@@ -114,10 +125,11 @@ async function marketBalance(){
   var rows = table.childElementCount
   var marketCaps = []
   for (let i = 0; i < rows; i++) {
+    capper += 1
     marketCaps.push({i:i,cap:0})
     var symbol = document.getElementById("symbol"+i).value.toUpperCase()
     getMarketCap(symbol, i, rows, marketCaps);
-    await sleep(200)
+    await sleep(40)
   }
 }
 async function calcWeights(marketCaps){
@@ -136,6 +148,6 @@ async function calcWeights(marketCaps){
     var table = document.getElementById("stonks")
     var availCap = document.getElementById("availCapital").value
     getQuote(symbol, i, availCap, table)
-    await sleep(200)
+    await sleep(40)
   }
 }
