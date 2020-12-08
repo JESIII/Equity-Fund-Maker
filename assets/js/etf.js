@@ -46,7 +46,7 @@ function delRow(){
 }
 function getQuote(symbol, i, availCap){
   var settings = {
-    "url": "https://finnhub.io/api/v1/quote?token=bt4mbbv48v6um6kgp3vg&symbol=" + symbol,
+    "url": "https://finnhub.io/api/v1/quote?token=bs1moqvrh5rbe4rkr830&symbol=" + symbol,
     "method": "GET",
     "timeout": 0,
     "headers": {
@@ -57,11 +57,11 @@ function getQuote(symbol, i, availCap){
     if(capper%30 == 0 && capper!= 0){
       await sleep(60000)
     }
-    console.log("Sent Request: " + settings.url)
+    //console.log("Sent Request: " + settings.url)
     var alloc = document.getElementById("alloc" + (i)).value / 100 * availCap
     var quan = Math.floor(alloc / response.pc)
     var eq = quan * response.pc
-    console.log(symbol + ": " + response.pc)
+    //console.log(symbol + ": " + response.pc)
     document.getElementById("quant"+(i)).innerText = quan
     document.getElementById("pps"+(i)).innerText = response.pc
     document.getElementById("eq"+(i)).innerText = eq
@@ -85,15 +85,15 @@ async function autoBalance(){
           await sleep(60000)
         }
         var symbol = document.getElementById("symbol"+i).value.toUpperCase()
-        console.log(symbol)
+        //console.log(symbol)
         getQuote(symbol, i, availCap)
         await sleep(40)
     }
 }
 function getMarketCap(symbol, i, rows, marketCaps){
-  console.log(i)
+  //console.log(i)
   var settings = {
-    "url": "https://finnhub.io/api/v1/stock/profile2?token=bt4mbbv48v6um6kgp3vg&symbol=" + symbol,
+    "url": "https://finnhub.io/api/v1/stock/profile2?token=bs1moqvrh5rbe4rkr830&symbol=" + symbol,
     "method": "GET",
     "timeout": 0,
     "headers": {
@@ -101,9 +101,9 @@ function getMarketCap(symbol, i, rows, marketCaps){
     },
   };
   $.ajax(settings).done(async function (response) {
-    console.log("Sent Request: " + settings.url)
+    //console.log("Sent Request: " + settings.url)
     marketCaps[i].cap = response.marketCapitalization
-    console.log(symbol + ": " + response.marketCapitalization)
+    //console.log(symbol + ": " + response.marketCapitalization)
     if (marketCaps.length == rows){
       await sleep(40)
       if(capper%30 == 0 && capper!= 0){
