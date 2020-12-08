@@ -13,5 +13,5 @@ You can either enter manual weights for each stock, or automatically weight them
 The output tells you how many to buy and how much it will cost to buy that many.  
   
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[GPL-3.0-or-later](https://choosealicense.com/licenses/gpl-3.0/)
  
